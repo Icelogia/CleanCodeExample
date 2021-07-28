@@ -6,7 +6,7 @@ public class Combat : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private InputController _input;
     [SerializeField] private GameObject _weaponColliderObj;
-    private int comboStep = 0;
+    private int _comboStep = 0;
 
     private void Update()
     {
@@ -18,25 +18,25 @@ public class Combat : MonoBehaviour
 
     private void Attack()
     {
-        SecondAttack();
+        SecondAttack();//comment
         FirstAttack();
     }
 
     private void FirstAttack()
     {
-        if (comboStep == 0)
+        if (_comboStep == 0)
         {
             _movement.SetMovingPossibility(false);
             _animator.SetBool("isDoingCombo", false);
             _animator.SetTrigger("attack");
-            comboStep++;
+            _comboStep++;
             _weaponColliderObj.SetActive(true);
         }
     }
 
     private void SecondAttack()
     {
-        if (comboStep != 0)
+        if (_comboStep != 0)
         {
             _weaponColliderObj.SetActive(false);
             _movement.SetMovingPossibility(false);
@@ -48,7 +48,7 @@ public class Combat : MonoBehaviour
     public void ResetCombo()
     {
         _weaponColliderObj.SetActive(false);
-        comboStep = 0;
+        _comboStep = 0;
         _animator.Play("Idle");
         _animator.SetBool("isDoingCombo", false);
         _movement.SetMovingPossibility(true);

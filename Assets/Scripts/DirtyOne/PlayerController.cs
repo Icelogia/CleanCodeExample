@@ -38,7 +38,6 @@ public class PlayerController : MonoBehaviour
                 canMove = false;
                 _animator.SetBool("isDoingCombo", true);
                 weaponcolliderobj.SetActive(true);
-                
             }
 
             if (comboStep == 0)

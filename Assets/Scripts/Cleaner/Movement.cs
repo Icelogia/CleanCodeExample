@@ -13,6 +13,9 @@ public class Movement : MonoBehaviour
     private Vector3 _movement;
     private bool canMove = true;
 
+    private const float _minRunVelocity = 0.1f;
+    private const float _backwardMovementSpd = 0.5f;
+
     private void Update()
     {
         if(_input.jump && canMove)
@@ -23,7 +26,7 @@ public class Movement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(canMove)
+        if (canMove)
         {
             Move();
             Rotate();
@@ -33,13 +36,13 @@ public class Movement : MonoBehaviour
     private void Move()
     {
         _movement = _speed * _trans.forward * _input.vertical;
-        if(_input.vertical > 0.1)
+        if(_input.vertical > _minRunVelocity)
         {
             _controller.Move(_movement * Time.fixedDeltaTime);
         }
-        else if(_input.vertical < -0.1)
+        else if(_input.vertical < -_minRunVelocity)
         {
-            _controller.Move(_movement * 0.5f * Time.fixedDeltaTime);
+            _controller.Move(_movement * _backwardMovementSpd * Time.fixedDeltaTime);
         }
         
         _animator.SetFloat("speed", _input.vertical);
